@@ -9,7 +9,7 @@
     "name": "onyx",
     "version": "1.0.0",
     "scripts": {
-        "start": "node ./functions/screenshot.js"
+        "dev": "netlify dev"
     },
     "dependencies": {
         "@netlify/functions": "^0.7.2",

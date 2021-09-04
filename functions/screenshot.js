@@ -1,4 +1,3 @@
-const { builder } = require("@netlify/functions");
 const chromium = require("chrome-aws-lambda");
 
 async function screenshot(url) {
@@ -27,8 +26,13 @@ async function screenshot(url) {
     return output;
 }
 
-async function handler(event, context) {
-    const url = decodeURIComponent(event.path);
+exports.handler = async event => {
+    const queryStringUrl = event.queryStringParameters.url
+    if (!queryStringUrl) return {
+        statusCode: 200,
+        body: JSON.stringify({message: 'pas d\'url'})
+    }
+    const url = decodeURIComponent(event.queryStringParameters.url);
     try {
         let output = await screenshot(url);
         return {
@@ -52,5 +56,3 @@ async function handler(event, context) {
         };
     }
 }
-
-exports.handler = builder(handler);
