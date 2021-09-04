@@ -1,7 +1,10 @@
 {
-    "author": "Sylvadoc",
+    "author": {
+        "name": "Sylvadoc",
+        "email": "legacjf@gmail.com"
+    },
     "description": "screenshot as a service",
-    "license": "MIT",
+    "homepage": "https://github.com/sylvadoc/onyx",
     "main": "index.js",
     "name": "onyx",
     "version": "1.0.0",
@@ -9,6 +12,11 @@
         "start": "node index.js"
     },
     "dependencies": {
-        "puppeteer": "^10.2.0"
+        "chrome-aws-lambda": "^10.1.0",
+        "puppeteer-core": "^10.1.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sylvadoc/onyx.git"
     }
 }

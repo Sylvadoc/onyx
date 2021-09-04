@@ -1,24 +1,56 @@
-const puppeteer = require('puppeteer');
+const { builder } = require("@netlify/functions");
+const chromium = require("chrome-aws-lambda");
 
-takeScreenshot()
-    .then(() => {
-        console.log("Screenshot taken");
-    })
-    .catch((err) => {
-        console.log("Error occured!");
-        console.dir(err);
+async function screenshot(url) {
+    const browser = await chromium.puppeteer.launch({
+        executablePath: await chromium.executablePath,
+        args: chromium.args,
+        defaultViewport: {
+            width: '1024',
+            height: '512',
+            deviceScaleFactor: 1,
+        },
+        headless: chromium.headless,
     });
-
-async function takeScreenshot() {
-    const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto("https://immobilier.lefigaro.fr", {waitUntil: 'networkidle2'});
-
-
-    const buffer = await page.screenshot({
-        path: './screenshot.png'
+    let response = await page.goto(url, {
+        waitUntil: ["load", "networkidle0"],
+        timeout: 8500
     });
-
-    await page.close();
+    let options = {
+        type: "jpeg",
+        encoding: "base64",
+        quality: 80
+    };
+    let output = await page.screenshot(options);
     await browser.close();
+    return output;
 }
+
+async function handler(event, context) {
+    const url = decodeURIComponent(event.path);
+    try {
+        let output = await screenshot(url);
+        return {
+            statusCode: 200,
+            headers: {
+                "content-type": `image/jpeg`
+            },
+            body: output,
+            isBase64Encoded: true
+        };
+    } catch (error) {
+        console.log("Error", error);
+        return {
+            statusCode: 200,
+            headers: {
+                "content-type": "text/html",
+                "x-error-message": error.message
+            },
+            body: `erreur`,
+            isBase64Encoded: false,
+        };
+    }
+}
+
+exports.handler = builder(handler);
