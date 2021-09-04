@@ -1,0 +1,14 @@
+[functions]
+directory = "functions"
+
+[[redirects]]
+from = "/1.0/*"
+to = "https://onyx-test.netlify.app/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "/*"
+to = "https://onyx-test.netlify.app/:splat"
+status = 301
+force = true
