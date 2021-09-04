@@ -1,0 +1,14 @@
+{
+    "author": "Sylvadoc",
+    "description": "screenshot as a service",
+    "license": "MIT",
+    "main": "index.js",
+    "name": "onyx",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "puppeteer": "^10.2.0"
+    }
+}
