@@ -5,11 +5,11 @@
     },
     "description": "screenshot as a service",
     "homepage": "https://github.com/Sylvadoc/onyx",
-    "main": "index.js",
+    "main": "./functions/screenshot.js",
     "name": "onyx",
     "version": "1.0.0",
     "scripts": {
-        "start": "node index.js"
+        "start": "node ./functions/screenshot.js"
     },
     "dependencies": {
         "chrome-aws-lambda": "^10.1.0",
