@@ -4,7 +4,7 @@
         "email": "legacjf@gmail.com"
     },
     "description": "screenshot as a service",
-    "homepage": "https://github.com/sylvadoc/onyx",
+    "homepage": "https://github.com/Sylvadoc/onyx",
     "main": "index.js",
     "name": "onyx",
     "version": "1.0.0",
