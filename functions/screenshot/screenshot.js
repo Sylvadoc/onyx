@@ -1,3 +1,48 @@
+const chromium = require('chrome-aws-lambda');
+
+exports.handler = async (event, context) => {
+
+    const pageToScreenshot = decodeURIComponent(event.queryStringParameters.url);
+
+    if (!pageToScreenshot) return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Page URL not defined' })
+    }
+
+    const browser = await chromium.puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: {
+            width: '1024',
+            height: '512',
+            deviceScaleFactor: 1,
+        },
+        executablePath: await chromium.executablePath,
+        headless: chromium.headless,
+    });
+
+    const page = await browser.newPage();
+
+    await page.goto(pageToScreenshot, { waitUntil: 'networkidle2' });
+
+    const screenshot = await page.screenshot({
+        type: "jpeg",
+        encoding: "binary",
+        quality: 80
+    });
+
+    await browser.close();
+
+    return {
+        statusCode: 200,
+        body: JSON.stringify({
+            message: `Complete screenshot of ${pageToScreenshot}`,
+            buffer: screenshot
+        })
+    }
+
+}
+
+/*
 const chromium = require("chrome-aws-lambda");
 
 async function screenshot(url) {
@@ -44,15 +89,15 @@ exports.handler = async event => {
             isBase64Encoded: true
         };
     } catch (error) {
-        console.log("Error", error);
         return {
             statusCode: 200,
             headers: {
                 "content-type": "text/html",
                 "x-error-message": error.message
             },
-            body: `erreur`,
+            body: JSON.stringify(error),
             isBase64Encoded: false,
         };
     }
 }
+*/

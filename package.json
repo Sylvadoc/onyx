@@ -5,19 +5,14 @@
     },
     "description": "screenshot as a service",
     "homepage": "https://github.com/Sylvadoc/onyx",
-    "main": "./functions/screenshot.js",
+    "main": "functions/screenshot/screenshot.js",
     "name": "onyx",
     "version": "1.0.0",
     "scripts": {
         "dev": "netlify dev"
     },
     "dependencies": {
-        "@netlify/functions": "^0.7.2",
-        "chrome-aws-lambda": "^10.1.0",
-        "puppeteer-core": "^10.2.0"
-    },
-    "devDependencies": {
-        "puppeteer": "^10.2.0"
+        "@netlify/functions": "^0.7.2"
     },
     "repository": {
         "type": "git",
