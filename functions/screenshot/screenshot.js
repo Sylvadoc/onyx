@@ -26,7 +26,7 @@ exports.handler = async (event, context) => {
 
     const screenshot = await page.screenshot({
         type: "jpeg",
-        encoding: "binary",
+        encoding: "base64",
         quality: 80
     });
 
@@ -36,7 +36,11 @@ exports.handler = async (event, context) => {
         statusCode: 200,
         body: JSON.stringify({
             message: `Complete screenshot of ${pageToScreenshot}`,
-            buffer: screenshot
+            headers: {
+                "content-type": `image/jpeg`
+            },
+            body: screenshot,
+            isBase64Encoded: true
         })
     }
 
