@@ -43,8 +43,7 @@ exports.handler = async (event, context) => {
             headers: {
                 "content-type": `image/jpeg`
             },
-            body: screenshot,
-            isBase64Encoded: true
+            body: `<img src='data:image/png;base64, ${screenshot}' width='1024' height='512' />`
         })
     }
 
