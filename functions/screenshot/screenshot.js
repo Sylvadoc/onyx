@@ -28,16 +28,17 @@ exports.handler = async (event, context) => {
         }
     );
 
-    const screenshot = await page.screenshot({ encoding: 'binary' });
+    const screenshot = await page.screenshot();
 
     await browser.close();
 
     return {
         statusCode: 200,
-        body: JSON.stringify({
-            message: `Complete screenshot of ${pageToScreenshot}`,
-            buffer: screenshot
-        })
+        headers: {
+            "Content-Type": "image/jpeg",
+        },
+        body: screenshot.toString("base64"),
+        isBase64Encoded: true,
     }
 
 }
