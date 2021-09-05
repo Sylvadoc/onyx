@@ -12,8 +12,8 @@ exports.handler = async (event, context) => {
     const browser = await chromium.puppeteer.launch({
         args: chromium.args,
         defaultViewport: {
-            width: '1024',
-            height: '512',
+            width: 1024,
+            height: 512,
             deviceScaleFactor: 1,
         },
         executablePath: await chromium.executablePath,
